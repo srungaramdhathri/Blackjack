@@ -1,0 +1,198 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Deck{
+
+                String[] Suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
+
+                String[] Values = {"2", "3", "4", "5", "6", "7", "8", "9", "10","Jack", "Queen", "King", "Ace" };
+
+                int n = Suits.length * Values.length;
+
+                String[] deck = new String[n];
+
+
+
+
+            public void make(){
+                for (int i = 0; i < Values.length; i++) {
+                    for (int j = 0; j < Suits.length; j++) {
+                        deck[Suits.length*i + j] = Values[i] + " of " + Suits[j];
+                    }
+                }
+               // print();
+
+            }
+
+               public void shuffle(){
+                for (int i = 0; i < n; i++) {
+                    int r = i + (int) (Math.random() * (n-i));
+                    String temp = deck[r];
+                    deck[r] = deck[i];
+                    deck[i] = temp;
+                }
+                //print();
+            }
+
+              public void print(){
+                for (int i = 0; i < n; i++) {                                                                    //array
+                    System.out.println(deck[i]);
+                }
+            }
+
+            public void printAl(ArrayList<String> array){
+                int s= array.size();
+                for (int i = 0; i<array.size(); i++){                                                            //arrayList
+                    System.out.println(array.get(i));
+                }
+            }
+
+            public void deal(String a){
+                //ArrayList dDeck = new ArrayList();
+                 ArrayList<String> dDeck = new ArrayList<String>();
+                     dDeck.add(deck[0]);
+                     dDeck.add(deck[2]);
+                     System.out.println("Dealer Deck");
+                     System.out.println();
+                     System.out.println("HIDDEN");
+                     System.out.println(dDeck.get(1));
+                     System.out.println();
+                    System.out.println();
+                    System.out.println();
+
+                int turn = 4;
+
+                 ArrayList<String> pDeck = new ArrayList<String>();
+                     System.out.println(a+"'s Deck");
+                     System.out.println();
+                     pDeck.add(deck[1]);
+                     pDeck.add(deck[3]);
+                     printAl(pDeck);
+                     System.out.println();
+                     System.out.println();
+                     System.out.println();
+                     int t = total(pDeck);
+                     System.out.println("Total: "+t);
+                     hit(pDeck,turn,dDeck);
+            }
+
+
+
+
+            public static int total(ArrayList<String> array){
+                int total = 0;
+                int val=0;
+                for (int i = 0; i<array.size(); i++){
+                    if (array.get(i).equals("2 of Spades")||array.get(i).equals("2 of Hearts")||array.get(i).equals("2 of Diamonds")||array.get(i).equals("2 of Clubs"))
+                         val = 2;
+                    if (array.get(i).equals("3 of Spades")||array.get(i).equals("3 of Hearts")||array.get(i).equals("3 of Diamonds")||array.get(i).equals("3 of Clubs"))
+                         val = 3;
+                    if (array.get(i).equals("4 of Spades")||array.get(i).equals("4 of Hearts")||array.get(i).equals("4 of Diamonds")||array.get(i).equals("4 of Clubs"))
+                         val = 4;
+                    if (array.get(i).equals("5 of Spades")||array.get(i).equals("5 of Hearts")||array.get(i).equals("5 of Diamonds")||array.get(i).equals("5 of Clubs"))
+                         val = 5;
+                    if (array.get(i).equals("6 of Spades")||array.get(i).equals("6 of Hearts")||array.get(i).equals("6 of Diamonds")||array.get(i).equals("6 of Clubs"))
+                         val = 6;
+                    if (array.get(i).equals("7 of Spades")||array.get(i).equals("7 of Hearts")||array.get(i).equals("7 of Diamonds")||array.get(i).equals("7 of Clubs"))
+                         val = 7;
+                    if (array.get(i).equals("8 of Spades")||array.get(i).equals("8 of Hearts")||array.get(i).equals("8 of Diamonds")||array.get(i).equals("8 of Clubs"))
+                         val = 8;
+                    if (array.get(i).equals("9 of Spades")||array.get(i).equals("9 of Hearts")||array.get(i).equals("9 of Diamonds")||array.get(i).equals("9 of Clubs"))
+                         val = 9;
+                    if (array.get(i).equals("10 of Spades")||array.get(i).equals("10 of Hearts")||array.get(i).equals("10 of Diamonds")||array.get(i).equals("10 of Clubs")||array.get(i).equals("Jack of Spades")||array.get(i).equals("Jack of Hearts")||array.get(i).equals("Jack of Diamonds")||array.get(i).equals("Jack of Clubs")||array.get(i).equals("Queen of Spades")||array.get(i).equals("Queen of Hearts")||array.get(i).equals("Queen of Diamonds")||array.get(i).equals("Queen of Clubs")||array.get(i).equals("King of Spades")||array.get(i).equals("King of Hearts")||array.get(i).equals("King of Diamonds")||array.get(i).equals("King of Clubs"))
+                         val = 10;
+                    if (array.get(i).equals("Ace of Spades")||array.get(i).equals("Ace of Hearts")||array.get(i).equals("Ace of Diamonds")||array.get(i).equals("Ace of Clubs")){
+                        //total+=val;
+                        if ((total+11<=21))
+                            val = 11;
+                        else
+                            val = 1;
+                    }
+                    total+=val;
+
+
+
+
+                }
+                //System.out.println("total is "+ total);
+                return total;
+            }
+
+
+            public void hit(ArrayList<String> array, int a,ArrayList<String> array2){
+                            Scanner sc = new Scanner(System.in);
+                            System.out.println("Hit (0) or Stay (1) ");
+                            String val = sc.nextLine();
+                            int result = Integer.parseInt(val);
+                            for (int i = a; i<a+1;i++){
+                                if (result == 0){
+                                    array.add(deck[i]);
+                                    System.out.println();
+                                    printAl(array);
+                                    System.out.println();
+                                    int t= total(array);
+                                    System.out.println("Total: "+t);
+                                    if (t>21){
+                                        System.out.println("You Bust");
+                                        //dealer(a,array2, array);
+                                    }
+                                    else{
+                                        //System.out.println(total(array));
+                                        a++;
+                                        hit(array,a,array2);
+                                    }
+                                    break;
+                                }
+                                if (result!=0||result!=1 )
+                                    System.out.println(val+" is not 0 or 1");
+                                if(result == 1)
+                                	System.out.println("******************************A is "+a);
+                                    dealer(a,array2,array);
+
+
+                            }
+
+
+            }
+
+            public  void dealer(int x,ArrayList<String> array,ArrayList<String> array2 ){
+                int t = total(array);
+
+                System.out.println("--------------SEET------------ " + t);
+
+                if(t<17)
+                {
+                    for (int i = x; i<x+1;i++)
+                    {
+                    	array.add(deck[i]);
+                    	System.out.println();
+                    	System.out.println("dealer takes card "+i);
+                    	x++;
+                    	//System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& x is "+x);
+                    	dealer(x, array, array2);
+                    	break;
+                    }
+                 } else
+                 {
+                   printAl(array);
+                  // System.out.println("#######################SEET " + t);
+        		 }
+
+
+                /*
+                if (t>=17)
+                {
+                    System.out.println("Dealer stays");
+                    System.out.println();
+                    System.out.println();
+                    System.out.println("Dealer's Deck: ");
+                 //   printAl(array);
+
+                }
+                */
+
+
+            }
+}
+
+
